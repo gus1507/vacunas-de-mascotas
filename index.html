@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetCare · Salud Integral para Mascotas</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0a1628;--deep:#0d2244;--sky:#2563eb;--aqua:#38bdf8;--accent:#06b6d4;--light:#bae6fd;--white:#f0f8ff;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 10%,rgba(37,99,235,.35) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 80% 80%,rgba(6,182,212,.25) 0%,transparent 60%);pointer-events:none;z-index:0;}
+
+/* NAV */
+nav{position:fixed;top:0;width:100%;z-index:100;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(10,22,40,.8);backdrop-filter:blur(16px);border-bottom:1px solid rgba(56,189,248,.15);}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--aqua);}
+.nav-logo span{color:var(--white);}
+nav ul{list-style:none;display:flex;gap:1.2rem;flex-wrap:wrap;}
+nav ul li a{text-decoration:none;color:var(--light);font-size:.82rem;font-weight:500;transition:color .2s;}
+nav ul li a:hover{color:var(--aqua);}
+
+/* HERO */
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 4rem;}
+.hero-content{max-width:780px;}
+.hero-badge{display:inline-block;background:rgba(56,189,248,.15);border:1px solid rgba(56,189,248,.4);color:var(--aqua);padding:.4rem 1.2rem;border-radius:50px;font-size:.78rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:1.5rem;animation:fadeUp .8s ease both;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;line-height:1.1;margin-bottom:1.5rem;animation:fadeUp .8s .15s ease both;}
+.hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--aqua),var(--sky));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero p{font-size:1.1rem;font-weight:300;color:var(--light);line-height:1.8;max-width:560px;margin:0 auto 2.5rem;animation:fadeUp .8s .3s ease both;}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;animation:fadeUp .8s .45s ease both;}
+
+/* BUTTONS */
+.btn-primary{background:linear-gradient(135deg,var(--sky),var(--accent));color:#fff;border:none;padding:.85rem 2rem;border-radius:50px;font-size:.95rem;font-weight:600;cursor:pointer;text-decoration:none;box-shadow:0 8px 30px rgba(37,99,235,.5);transition:transform .2s,box-shadow .2s;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(37,99,235,.7);}
+.btn-outline{background:transparent;color:var(--aqua);border:1.5px solid rgba(56,189,248,.5);padding:.85rem 2rem;border-radius:50px;font-size:.95rem;font-weight:600;cursor:pointer;text-decoration:none;transition:background .2s;}
+.btn-outline:hover{background:rgba(56,189,248,.1);}
+
+/* SECTIONS */
+section{position:relative;z-index:1;padding:5rem 2rem;max-width:1200px;margin:0 auto;}
+.section-label{font-size:.73rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--aqua);margin-bottom:.8rem;}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;margin-bottom:1rem;}
+.section-sub{color:var(--light);font-weight:300;font-size:1rem;line-height:1.7;max-width:600px;}
+.section-header{margin-bottom:3rem;}
+.sep{width:100%;max-width:1200px;margin:0 auto;height:1px;background:linear-gradient(90deg,transparent,rgba(56,189,248,.2),transparent);}
+
+/* CARDS */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.4rem;}
+.card{background:rgba(13,34,68,.6);border:1px solid rgba(56,189,248,.15);border-radius:20px;padding:1.8rem;backdrop-filter:blur(8px);transition:transform .3s,border-color .3s,box-shadow .3s;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--sky),var(--aqua));opacity:0;transition:opacity .3s;}
+.card:hover{transform:translateY(-6px);border-color:rgba(56,189,248,.4);box-shadow:0 20px 50px rgba(6,182,212,.15);}
+.card:hover::before{opacity:1;}
+.card-icon{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,rgba(37,99,235,.3),rgba(6,182,212,.2));border:1px solid rgba(56,189,248,.25);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.1rem;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:.5rem;}
+.card p{color:var(--light);font-size:.92rem;line-height:1.6;font-weight:300;}
+
+/* TABLES */
+.schedule-wrap{background:rgba(13,34,68,.6);border:1px solid rgba(56,189,248,.15);border-radius:24px;overflow:hidden;backdrop-filter:blur(8px);}
+.tabs{display:flex;border-bottom:1px solid rgba(56,189,248,.15);}
+.tab-btn{flex:1;padding:1.1rem;background:transparent;border:none;color:var(--light);font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;cursor:pointer;transition:all .2s;border-bottom:3px solid transparent;}
+.tab-btn.active{color:var(--aqua);border-bottom-color:var(--aqua);background:rgba(56,189,248,.05);}
+.tab-content{display:none;padding:1.8rem;overflow-x:auto;}
+.tab-content.active{display:block;}
+table{width:100%;border-collapse:collapse;}
+thead th{text-align:left;padding:.75rem 1rem;font-size:.75rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--aqua);border-bottom:1px solid rgba(56,189,248,.15);}
+tbody tr{border-bottom:1px solid rgba(255,255,255,.05);transition:background .2s;}
+tbody tr:hover{background:rgba(56,189,248,.07);}
+tbody td{padding:.85rem 1rem;font-size:.9rem;color:var(--light);}
+tbody td:first-child{color:var(--white);font-weight:500;}
+.badge{display:inline-block;padding:.22rem .65rem;border-radius:50px;font-size:.72rem;font-weight:600;}
+.badge-green{background:rgba(16,185,129,.2);color:#6ee7b7;border:1px solid rgba(16,185,129,.3);}
+.badge-yellow{background:rgba(245,158,11,.2);color:#fcd34d;border:1px solid rgba(245,158,11,.3);}
+.badge-red{background:rgba(239,68,68,.2);color:#fca5a5;border:1px solid rgba(239,68,68,.3);}
+
+/* REMINDER */
+.reminder-box{background:rgba(13,34,68,.7);border:1px solid rgba(56,189,248,.2);border-radius:24px;padding:2.5rem;backdrop-filter:blur(8px);}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.4rem;margin-bottom:1.8rem;}
+.form-group label{display:block;font-size:.8rem;font-weight:600;letter-spacing:.8px;color:var(--aqua);margin-bottom:.45rem;text-transform:uppercase;}
+.form-group input,.form-group select{width:100%;padding:.8rem 1rem;background:rgba(255,255,255,.06);border:1px solid rgba(56,189,248,.25);border-radius:10px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.93rem;outline:none;transition:border-color .2s;}
+.form-group input:focus,.form-group select:focus{border-color:var(--aqua);}
+.form-group select option{background:var(--deep);}
+.result-box{display:none;background:rgba(37,99,235,.1);border:1px solid rgba(56,189,248,.3);border-radius:16px;padding:1.8rem;margin-top:1.4rem;animation:fadeUp .5s ease both;}
+.result-box.show{display:block;}
+.result-title{font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:1rem;color:var(--aqua);}
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;}
+.result-item{background:rgba(255,255,255,.05);border-radius:12px;padding:1rem;text-align:center;}
+.result-item .val{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--aqua);}
+.result-item .lbl{font-size:.78rem;color:var(--light);margin-top:.3rem;}
+
+/* VET CARDS */
+.vet-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.4rem;}
+.vet-card{background:rgba(13,34,68,.6);border:1px solid rgba(56,189,248,.15);border-radius:20px;padding:1.6rem;backdrop-filter:blur(8px);transition:transform .3s,box-shadow .3s;}
+.vet-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(6,182,212,.15);}
+.vet-header{display:flex;align-items:center;gap:.9rem;margin-bottom:1.1rem;}
+.vet-avatar{width:48px;height:48px;border-radius:13px;background:linear-gradient(135deg,var(--sky),var(--accent));display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
+.vet-name{font-family:'Playfair Display',serif;font-size:1.05rem;}
+.vet-specialty{font-size:.78rem;color:var(--aqua);}
+.vet-info{display:flex;flex-direction:column;gap:.5rem;}
+.vet-info-row{display:flex;align-items:center;gap:.6rem;font-size:.85rem;color:var(--light);}
+.vet-btn{display:block;text-align:center;margin-top:1.3rem;padding:.65rem;border-radius:10px;background:rgba(37,99,235,.2);border:1px solid rgba(37,99,235,.4);color:var(--aqua);font-weight:600;font-size:.88rem;text-decoration:none;transition:background .2s;}
+.vet-btn:hover{background:rgba(37,99,235,.35);}
+
+/* CONTACTS */
+.contacts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.1rem;}
+.contact-card{background:rgba(13,34,68,.6);border:1px solid rgba(56,189,248,.15);border-radius:16px;padding:1.4rem;display:flex;align-items:center;gap:1rem;backdrop-filter:blur(8px);transition:transform .2s,border-color .2s;}
+.contact-card:hover{transform:translateY(-3px);border-color:rgba(56,189,248,.35);}
+.contact-icon{width:46px;height:46px;border-radius:12px;flex-shrink:0;background:linear-gradient(135deg,rgba(37,99,235,.3),rgba(6,182,212,.2));border:1px solid rgba(56,189,248,.25);display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
+.contact-label{font-size:.75rem;color:var(--aqua);font-weight:600;letter-spacing:.8px;text-transform:uppercase;}
+.contact-val{font-size:.97rem;font-weight:500;margin-top:.2rem;}
+
+/* GROOMING */
+.freq-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:1.3rem;}
+.freq-card{background:rgba(13,34,68,.6);border:1px solid rgba(56,189,248,.15);border-radius:18px;padding:1.5rem;backdrop-filter:blur(8px);transition:transform .3s,border-color .3s;}
+.freq-card:hover{transform:translateY(-4px);border-color:rgba(56,189,248,.35);}
+.freq-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;}
+.freq-emoji{font-size:1.9rem;}
+.freq-breed{font-family:'Playfair Display',serif;font-size:1rem;}
+.freq-type{font-size:.76rem;color:var(--aqua);}
+.freq-row{display:flex;justify-content:space-between;align-items:center;padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.86rem;}
+.freq-row:last-child{border-bottom:none;}
+.freq-row .key{color:var(--light);}
+.freq-row .val{color:var(--white);font-weight:500;text-align:right;}
+.grooming-tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem;margin-top:1.8rem;}
+.tip-card{background:linear-gradient(135deg,rgba(37,99,235,.1),rgba(6,182,212,.07));border:1px solid rgba(56,189,248,.18);border-radius:14px;padding:1.2rem;display:flex;gap:.75rem;align-items:flex-start;}
+.tip-card .tip-icon{font-size:1.4rem;flex-shrink:0;}
+.tip-card .tip-text{font-size:.86rem;color:var(--light);line-height:1.5;}
+.tip-card .tip-text strong{color:var(--white);display:block;margin-bottom:.2rem;}
+
+/* DESPARASITACION */
+.desp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.4rem;}
+.desp-card{background:rgba(13,34,68,.6);border:1px solid rgba(56,189,248,.15);border-radius:20px;padding:1.8rem;backdrop-filter:blur(8px);}
+.desp-title{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:1.1rem;display:flex;align-items:center;gap:.55rem;}
+.desp-row{display:flex;justify-content:space-between;align-items:center;padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.88rem;}
+.desp-row:last-child{border-bottom:none;}
+.desp-row .d-key{color:var(--light);}
+.desp-row .d-val{color:var(--white);font-weight:500;text-align:right;max-width:55%;}
+.warning-box{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:14px;padding:1.2rem 1.5rem;margin-top:1.5rem;display:flex;gap:.8rem;align-items:flex-start;font-size:.87rem;color:#fcd34d;line-height:1.5;}
+
+/* NUTRICION */
+.nutri-tabs{display:flex;gap:.55rem;flex-wrap:wrap;margin-bottom:1.8rem;}
+.nutri-tab{padding:.5rem 1.3rem;background:rgba(255,255,255,.05);border:1px solid rgba(56,189,248,.15);border-radius:50px;color:var(--light);font-size:.86rem;font-weight:500;cursor:pointer;transition:all .2s;}
+.nutri-tab.active,.nutri-tab:hover{background:rgba(37,99,235,.25);border-color:rgba(56,189,248,.4);color:var(--aqua);}
+.nutri-content{display:none;}
+.nutri-content.active{display:block;animation:fadeUp .4s ease;}
+.nutri-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:1rem;}
+.nutri-item{background:rgba(13,34,68,.6);border:1px solid rgba(56,189,248,.12);border-radius:16px;padding:1.3rem;text-align:center;}
+.nutri-item .n-icon{font-size:1.9rem;margin-bottom:.55rem;}
+.nutri-item .n-name{font-weight:600;font-size:.92rem;margin-bottom:.28rem;}
+.nutri-item .n-detail{font-size:.8rem;color:var(--light);line-height:1.5;}
+.nutri-danger{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.25);border-radius:20px;padding:1.7rem;margin-top:1.5rem;}
+.nutri-danger h4{font-family:'Playfair Display',serif;font-size:1.1rem;color:#fca5a5;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;}
+.danger-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:.55rem;}
+.danger-item{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);border-radius:8px;padding:.45rem .75rem;font-size:.8rem;color:#fca5a5;}
+
+/* PRIMEROS AUXILIOS */
+.primeros-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.4rem;}
+.primeros-card{background:rgba(13,34,68,.6);border:1px solid rgba(56,189,248,.15);border-radius:20px;padding:1.7rem;backdrop-filter:blur(8px);transition:transform .3s;}
+.primeros-card:hover{transform:translateY(-4px);}
+.primeros-title{font-family:'Playfair Display',serif;font-size:1.05rem;margin-bottom:.9rem;display:flex;align-items:center;gap:.55rem;}
+.steps-list{list-style:none;}
+.steps-list li{display:flex;gap:.65rem;padding:.45rem 0;font-size:.86rem;color:var(--light);line-height:1.5;border-bottom:1px solid rgba(255,255,255,.04);}
+.steps-list li:last-child{border-bottom:none;}
+.step-num{width:21px;height:21px;border-radius:50%;background:rgba(37,99,235,.3);border:1px solid rgba(56,189,248,.3);color:var(--aqua);font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem;}
+.emergency-banner{background:linear-gradient(135deg,rgba(239,68,68,.15),rgba(220,38,38,.08));border:1px solid rgba(239,68,68,.3);border-radius:16px;padding:1.4rem 1.8rem;display:flex;align-items:center;gap:1.3rem;flex-wrap:wrap;margin-top:1.8rem;}
+.emg-icon{font-size:2.2rem;}
+.emg-text h4{color:#fca5a5;font-size:.97rem;margin-bottom:.2rem;}
+.emg-text p{color:var(--light);font-size:.85rem;}
+.emg-num{margin-left:auto;font-family:'Playfair Display',serif;font-size:1.3rem;color:#fca5a5;font-weight:700;}
+
+/* CHECKLIST */
+.checklist-wrap{background:rgba(13,34,68,.6);border:1px solid rgba(56,189,248,.15);border-radius:24px;padding:2.2rem;backdrop-filter:blur(8px);}
+.checklist-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;}
+.checklist-col h4{font-family:'Playfair Display',serif;font-size:.97rem;color:var(--aqua);margin-bottom:.9rem;padding-bottom:.45rem;border-bottom:1px solid rgba(56,189,248,.2);}
+.check-item{display:flex;align-items:center;gap:.65rem;padding:.45rem 0;font-size:.88rem;color:var(--light);cursor:pointer;transition:color .2s;user-select:none;}
+.check-item:hover{color:var(--white);}
+.check-box{width:20px;height:20px;border-radius:6px;flex-shrink:0;border:1.5px solid rgba(56,189,248,.35);background:transparent;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:.75rem;}
+.check-item.done .check-box{background:var(--sky);border-color:var(--sky);color:white;}
+.check-item.done .check-label{text-decoration:line-through;opacity:.6;}
+.checklist-progress{margin-top:1.8rem;background:rgba(255,255,255,.06);border-radius:50px;height:10px;overflow:hidden;}
+.checklist-bar{height:100%;border-radius:50px;background:linear-gradient(90deg,var(--sky),var(--aqua));transition:width .4s ease;width:0%;}
+.checklist-pct{text-align:center;font-size:.83rem;color:var(--aqua);margin-top:.55rem;font-weight:600;}
+
+/* FOOTER */
+footer{position:relative;z-index:1;text-align:center;padding:2.5rem 2rem;color:rgba(186,230,253,.4);font-size:.83rem;border-top:1px solid rgba(56,189,248,.08);}
+footer strong{color:var(--aqua);}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:none;}
+@media(max-width:768px){nav ul{display:none;}.reminder-box{padding:1.4rem;}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Pet<span>Care</span></div>
+  <ul>
+    <li><a href="#vacunas">Vacunas</a></li>
+    <li><a href="#recordatorio">Recordatorio</a></li>
+    <li><a href="#bano">Baño</a></li>
+    <li><a href="#desparasitacion">Parásitos</a></li>
+    <li><a href="#nutricion">Nutrición</a></li>
+    <li><a href="#primeros-auxilios">Auxilios</a></li>
+    <li><a href="#checklist">Checklist</a></li>
+    <li><a href="#veterinarias">Veterinarias</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">🐾 Salud animal al día</div>
+    <h1>Cuida a tu mascota<br>con la <em>guía completa</em></h1>
+    <p>Vacunas, baño, desparasitación, nutrición, primeros auxilios y más — todo lo que necesitas para mantener a tu compañero sano y feliz.</p>
+    <div class="hero-cta">
+      <a href="#recordatorio" class="btn-primary">Calcular próxima vacuna</a>
+      <a href="#checklist" class="btn-outline">Ver checklist mensual</a>
+    </div>
+  </div>
+</div>
+
+<!-- POR QUE -->
+<section id="porque" class="reveal">
+  <div class="section-header">
+    <div class="section-label">¿Por qué importa?</div>
+    <h2 class="section-title">Prevención es la mejor medicina</h2>
+    <p class="section-sub">La salud de tu mascota depende de una rutina completa: vacunas, higiene, alimentación y cuidados médicos regulares.</p>
+  </div>
+  <div class="cards-grid">
+    <div class="card"><div class="card-icon">🛡️</div><h3>Inmunidad activa</h3><p>Las vacunas entrenan el sistema inmune para combatir patógenos antes de que causen daño grave o irreversible.</p></div>
+    <div class="card"><div class="card-icon">🌍</div><h3>Salud comunitaria</h3><p>Una mascota vacunada reduce el riesgo de contagio a otros animales y en algunos casos a personas del hogar.</p></div>
+    <div class="card"><div class="card-icon">💰</div><h3>Ahorro económico</h3><p>El costo de vacunar es mucho menor al tratamiento de enfermedades prevenibles. Invertir hoy evita gastos futuros.</p></div>
+    <div class="card"><div class="card-icon">📋</div><h3>Requisito legal</h3><p>La vacuna antirrábica es obligatoria por ley. Tener el carnet al día facilita viajes y evita sanciones.</p></div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- VACUNAS -->
+<section id="vacunas" class="reveal">
+  <div class="section-header">
+    <div class="section-label">Calendario oficial</div>
+    <h2 class="section-title">Programa de Vacunación</h2>
+    <p class="section-sub">Fechas recomendadas según especie y edad, basadas en guías veterinarias internacionales WSAVA.</p>
+  </div>
+  <div class="schedule-wrap">
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('perro',this)">🐶 Perros</button>
+      <button class="tab-btn" onclick="switchTab('gato',this)">🐱 Gatos</button>
+      <button class="tab-btn" onclick="switchTab('refuerzo',this)">🔄 Refuerzos</button>
+    </div>
+    <div id="tab-perro" class="tab-content active">
+      <table>
+        <thead><tr><th>Vacuna</th><th>Edad recomendada</th><th>Intervalo siguiente</th><th>Tipo</th></tr></thead>
+        <tbody>
+          <tr><td>Parvovirus + Moquillo (DA2PP)</td><td>6–8 semanas</td><td>Cada 3–4 semanas hasta sem. 16</td><td><span class="badge badge-green">Básica</span></td></tr>
+          <tr><td>Segunda dosis DA2PP</td><td>9–11 semanas</td><td>3–4 semanas</td><td><span class="badge badge-green">Básica</span></td></tr>
+          <tr><td>Tercera dosis DA2PP</td><td>12–14 semanas</td><td>3–4 semanas</td><td><span class="badge badge-green">Básica</span></td></tr>
+          <tr><td>Rabia</td><td>12–16 semanas</td><td>1 año, luego cada 3 años</td><td><span class="badge badge-red">Obligatoria</span></td></tr>
+          <tr><td>Cuarta dosis DA2PP</td><td>14–16 semanas</td><td>Anual o cada 3 años</td><td><span class="badge badge-green">Básica</span></td></tr>
+          <tr><td>Leptospirosis</td><td>12–16 semanas</td><td>3–4 semanas, luego anual</td><td><span class="badge badge-yellow">Recomendada</span></td></tr>
+          <tr><td>Bordetella</td><td>6–8 semanas</td><td>Anual o semestral</td><td><span class="badge badge-yellow">Recomendada</span></td></tr>
+          <tr><td>Influenza canina</td><td>8 semanas+</td><td>3 semanas, luego anual</td><td><span class="badge badge-yellow">Opcional</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="tab-gato" class="tab-content">
+      <table>
+        <thead><tr><th>Vacuna</th><th>Edad recomendada</th><th>Intervalo siguiente</th><th>Tipo</th></tr></thead>
+        <tbody>
+          <tr><td>Herpesvirus + Calicivirus + Panleucopenia (FVRCP)</td><td>6–8 semanas</td><td>Cada 3–4 semanas hasta sem. 16</td><td><span class="badge badge-green">Básica</span></td></tr>
+          <tr><td>Segunda dosis FVRCP</td><td>10–11 semanas</td><td>3–4 semanas</td><td><span class="badge badge-green">Básica</span></td></tr>
+          <tr><td>Tercera dosis FVRCP</td><td>13–14 semanas</td><td>3–4 semanas</td><td><span class="badge badge-green">Básica</span></td></tr>
+          <tr><td>Rabia felina</td><td>12–16 semanas</td><td>1 año, luego cada 1–3 años</td><td><span class="badge badge-red">Obligatoria</span></td></tr>
+          <tr><td>Leucemia felina (FeLV)</td><td>8–9 semanas</td><td>3–4 semanas, luego anual</td><td><span class="badge badge-yellow">Recomendada</span></td></tr>
+          <tr><td>Inmunodeficiencia felina (FIV)</td><td>8 semanas+</td><td>3 semanas, luego anual</td><td><span class="badge badge-yellow">Opcional</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="tab-refuerzo" class="tab-content">
+      <table>
+        <thead><tr><th>Vacuna</th><th>Especie</th><th>Frecuencia de refuerzo</th><th>Notas</th></tr></thead>
+        <tbody>
+          <tr><td>DA2PP adulto</td><td>🐶 Perro</td><td>Cada 1 o 3 años</td><td>Depende del fabricante y título serológico</td></tr>
+          <tr><td>Rabia</td><td>🐶🐱 Ambos</td><td>Anual o trienal</td><td>Según normativa local vigente</td></tr>
+          <tr><td>Leptospirosis</td><td>🐶 Perro</td><td>Anual</td><td>Alta exposición → semestral</td></tr>
+          <tr><td>Bordetella</td><td>🐶 Perro</td><td>Semestral o anual</td><td>Obligatoria para residencias caninas</td></tr>
+          <tr><td>FVRCP adulto</td><td>🐱 Gato</td><td>Cada 3 años</td><td>Título serológico puede ampliar intervalo</td></tr>
+          <tr><td>FeLV</td><td>🐱 Gato</td><td>Anual</td><td>Solo en gatos con acceso al exterior</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- RECORDATORIO -->
+<section id="recordatorio" class="reveal">
+  <div class="section-header">
+    <div class="section-label">Calculadora inteligente</div>
+    <h2 class="section-title">¿Cuándo vacunar?</h2>
+    <p class="section-sub">Ingresa los datos de tu mascota y calcula exactamente cuántos días faltan para la próxima dosis.</p>
+  </div>
+  <div class="reminder-box">
+    <div class="form-grid">
+      <div class="form-group"><label>Nombre de la mascota</label><input type="text" id="petName" placeholder="Ej. Max, Luna..."></div>
+      <div class="form-group"><label>Especie</label>
+        <select id="petType"><option value="">— Seleccionar —</option><option>Perro</option><option>Gato</option></select>
+      </div>
+      <div class="form-group"><label>Vacuna aplicada</label>
+        <select id="vaccineType">
+          <option value="">— Seleccionar —</option>
+          <optgroup label="Perros">
+            <option value="da2pp_c">DA2PP cachorro (entre dosis)</option>
+            <option value="da2pp_a">DA2PP adulto (refuerzo)</option>
+            <option value="rabia_p">Rabia canina</option>
+            <option value="lepto">Leptospirosis</option>
+            <option value="borde">Bordetella</option>
+          </optgroup>
+          <optgroup label="Gatos">
+            <option value="fvrcp_c">FVRCP gatito (entre dosis)</option>
+            <option value="fvrcp_a">FVRCP adulto (refuerzo)</option>
+            <option value="rabia_g">Rabia felina</option>
+            <option value="felv">Leucemia felina (FeLV)</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="form-group"><label>Fecha de última vacuna</label><input type="date" id="lastDate"></div>
+    </div>
+    <button class="btn-primary" onclick="calcular()">Calcular próxima dosis</button>
+    <div class="result-box" id="resultBox">
+      <div class="result-title" id="resultTitle"></div>
+      <div class="result-grid" id="resultGrid"></div>
+      <p style="margin-top:1rem;color:var(--light);font-size:.86rem;" id="resultNote"></p>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- BAÑO -->
+<section id="bano" class="reveal">
+  <div class="section-header">
+    <div class="section-label">Higiene y estética</div>
+    <h2 class="section-title">Baño & Grooming</h2>
+    <p class="section-sub">La higiene regular previene infecciones cutáneas, parásitos y problemas dentales. Conoce la frecuencia ideal según el tipo de pelo.</p>
+  </div>
+  <div class="freq-grid">
+    <div class="freq-card">
+      <div class="freq-header"><div class="freq-emoji">🐩</div><div><div class="freq-breed">Perros pelo corto</div><div class="freq-type">Labrador, Dachshund, Boxer</div></div></div>
+      <div class="freq-row"><span class="key">🛁 Baño</span><span class="val">Cada 6–8 semanas</span></div>
+      <div class="freq-row"><span class="key">✂️ Cepillado</span><span class="val">1 vez por semana</span></div>
+      <div class="freq-row"><span class="key">💅 Uñas</span><span class="val">Cada 3–4 semanas</span></div>
+      <div class="freq-row"><span class="key">👂 Orejas</span><span class="val">Cada 2 semanas</span></div>
+      <div class="freq-row"><span class="key">🦷 Dientes</span><span class="val">2–3 veces/semana</span></div>
+    </div>
+    <div class="freq-card">
+      <div class="freq-header"><div class="freq-emoji">🐕</div><div><div class="freq-breed">Perros pelo largo</div><div class="freq-type">Golden, Collie, Maltés</div></div></div>
+      <div class="freq-row"><span class="key">🛁 Baño</span><span class="val">Cada 3–4 semanas</span></div>
+      <div class="freq-row"><span class="key">✂️ Cepillado</span><span class="val">Diario o 3–4 veces/semana</span></div>
+      <div class="freq-row"><span class="key">💅 Uñas</span><span class="val">Cada 3 semanas</span></div>
+      <div class="freq-row"><span class="key">👂 Orejas</span><span class="val">Cada semana</span></div>
+      <div class="freq-row"><span class="key">🦷 Dientes</span><span class="val">A diario (ideal)</span></div>
+    </div>
+    <div class="freq-card">
+      <div class="freq-header"><div class="freq-emoji">🐱</div><div><div class="freq-breed">Gatos pelo corto</div><div class="freq-type">Siamés, British, Abisinio</div></div></div>
+      <div class="freq-row"><span class="key">🛁 Baño</span><span class="val">Cada 4–6 semanas</span></div>
+      <div class="freq-row"><span class="key">✂️ Cepillado</span><span class="val">1–2 veces/semana</span></div>
+      <div class="freq-row"><span class="key">💅 Uñas</span><span class="val">Cada 2–3 semanas</span></div>
+      <div class="freq-row"><span class="key">👂 Orejas</span><span class="val">Mensual</span></div>
+      <div class="freq-row"><span class="key">🦷 Dientes</span><span class="val">3 veces/semana</span></div>
+    </div>
+    <div class="freq-card">
+      <div class="freq-header"><div class="freq-emoji">😸</div><div><div class="freq-breed">Gatos pelo largo</div><div class="freq-type">Persa, Maine Coon, Ragdoll</div></div></div>
+      <div class="freq-row"><span class="key">🛁 Baño</span><span class="val">Cada 4 semanas</span></div>
+      <div class="freq-row"><span class="key">✂️ Cepillado</span><span class="val">A diario (evita nudos)</span></div>
+      <div class="freq-row"><span class="key">💅 Uñas</span><span class="val">Cada 2 semanas</span></div>
+      <div class="freq-row"><span class="key">👂 Orejas</span><span class="val">Cada 2 semanas</span></div>
+      <div class="freq-row"><span class="key">🦷 Dientes</span><span class="val">3 veces/semana</span></div>
+    </div>
+  </div>
+  <div class="grooming-tips">
+    <div class="tip-card"><div class="tip-icon">🌡️</div><div class="tip-text"><strong>Temperatura del agua</strong>Usa agua tibia 37–39°C. La piel animal es más sensible que la humana.</div></div>
+    <div class="tip-card"><div class="tip-icon">🧴</div><div class="tip-text"><strong>Shampoo específico</strong>Nunca uses champú humano. El pH diferente puede causar irritaciones y dermatitis.</div></div>
+    <div class="tip-card"><div class="tip-icon">💨</div><div class="tip-text"><strong>Secado correcto</strong>Seca bien con toalla y secadora a temperatura baja. Nunca dejes a tu mascota húmeda en frío.</div></div>
+    <div class="tip-card"><div class="tip-icon">✂️</div><div class="tip-text"><strong>Corte de uñas seguro</strong>Corta solo la punta blanca. Evita el "quick" rosado. Usa cortauñas específico para mascotas.</div></div>
+    <div class="tip-card"><div class="tip-icon">👁️</div><div class="tip-text"><strong>Limpieza ocular</strong>Limpia con gasa húmeda de adentro hacia afuera. Secreción verde = visita al veterinario.</div></div>
+    <div class="tip-card"><div class="tip-icon">🦷</div><div class="tip-text"><strong>Higiene dental</strong>Usa pasta dental para mascotas. El sarro acumulado puede causar enfermedad renal y cardíaca.</div></div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- DESPARASITACION -->
+<section id="desparasitacion" class="reveal">
+  <div class="section-header">
+    <div class="section-label">Control de parásitos</div>
+    <h2 class="section-title">Desparasitación</h2>
+    <p class="section-sub">Interna y externa: pulgas, garrapatas y lombrices afectan la salud de tu mascota y pueden transmitirse a personas.</p>
+  </div>
+  <div class="desp-grid">
+    <div class="desp-card">
+      <div class="desp-title">🪱 Desparasitación Interna</div>
+      <div class="desp-row"><span class="d-key">Cachorros 0–3 meses</span><span class="d-val">Cada 2 semanas</span></div>
+      <div class="desp-row"><span class="d-key">Jóvenes 3–6 meses</span><span class="d-val">Cada mes</span></div>
+      <div class="desp-row"><span class="d-key">Adultos 6+ meses</span><span class="d-val">Cada 3 meses</span></div>
+      <div class="desp-row"><span class="d-key">Hembras gestantes</span><span class="d-val">15 días antes del parto</span></div>
+      <div class="desp-row"><span class="d-key">Forma de aplicación</span><span class="d-val">Comprimido, pasta u oral</span></div>
+      <div class="desp-row"><span class="d-key">Parásitos</span><span class="d-val">Lombrices, tenias, giardia</span></div>
+    </div>
+    <div class="desp-card">
+      <div class="desp-title">🦟 Desparasitación Externa</div>
+      <div class="desp-row"><span class="d-key">Pipeta antiparasitaria</span><span class="d-val">Cada 4 semanas</span></div>
+      <div class="desp-row"><span class="d-key">Collar antiparasitario</span><span class="d-val">Cada 8 meses</span></div>
+      <div class="desp-row"><span class="d-key">Spray antipulgas</span><span class="d-val">Según indicación del producto</span></div>
+      <div class="desp-row"><span class="d-key">Champú antiparasitario</span><span class="d-val">Mensual en temporada alta</span></div>
+      <div class="desp-row"><span class="d-key">Parásitos</span><span class="d-val">Pulgas, garrapatas, ácaros</span></div>
+      <div class="desp-row"><span class="d-key">Temporada alta</span><span class="d-val">Primavera–Verano</span></div>
+    </div>
+    <div class="desp-card">
+      <div class="desp-title">🏠 Desinfección del Hogar</div>
+      <div class="desp-row"><span class="d-key">Lavar cama/colchoneta</span><span class="d-val">Cada 2 semanas a 60°C</span></div>
+      <div class="desp-row"><span class="d-key">Aspirar alfombras</span><span class="d-val">2–3 veces por semana</span></div>
+      <div class="desp-row"><span class="d-key">Spray ambiental antipulgas</span><span class="d-val">Cada 3 meses en temporada</span></div>
+      <div class="desp-row"><span class="d-key">Limpiar comedero/bebedero</span><span class="d-val">A diario</span></div>
+      <div class="desp-row"><span class="d-key">Revisar el jardín</span><span class="d-val">Mensual (focos de garrapatas)</span></div>
+    </div>
+    <div class="desp-card">
+      <div class="desp-title">⚠️ Señales de Alerta</div>
+      <div class="desp-row"><span class="d-key">Rascado excesivo</span><span class="d-val">Posibles pulgas o sarna</span></div>
+      <div class="desp-row"><span class="d-key">Arrastrar el trasero</span><span class="d-val">Parásitos intestinales</span></div>
+      <div class="desp-row"><span class="d-key">Pérdida de peso repentina</span><span class="d-val">Parásitos internos</span></div>
+      <div class="desp-row"><span class="d-key">Vómitos o diarrea</span><span class="d-val">Posible infestación interna</span></div>
+      <div class="desp-row"><span class="d-key">Apatía y anemia</span><span class="d-val">Infestación severa de pulgas</span></div>
+    </div>
+  </div>
+  <div class="warning-box">⚠️&nbsp; <span>Nunca uses productos antiparasitarios de perros en gatos. Ingredientes como la Permetrina son altamente tóxicos para los felinos y pueden ser mortales. Consulta siempre a tu veterinario.</span></div>
+</section>
+
+<div class="sep"></div>
+
+<!-- NUTRICION -->
+<section id="nutricion" class="reveal">
+  <div class="section-header">
+    <div class="section-label">Alimentación sana</div>
+    <h2 class="section-title">Nutrición & Dieta</h2>
+    <p class="section-sub">Una alimentación equilibrada fortalece el sistema inmune, mantiene el peso ideal y prolonga la vida de tu mascota.</p>
+  </div>
+  <div class="nutri-tabs">
+    <button class="nutri-tab active" onclick="switchNutri('nc',this)">🍼 Cachorros</button>
+    <button class="nutri-tab" onclick="switchNutri('na',this)">🐶 Adultos</button>
+    <button class="nutri-tab" onclick="switchNutri('ns',this)">👴 Senior</button>
+    <button class="nutri-tab" onclick="switchNutri('ng',this)">🐱 Gatos</button>
+  </div>
+  <div id="nutri-nc" class="nutri-content active">
+    <div class="nutri-grid">
+      <div class="nutri-item"><div class="n-icon">🍗</div><div class="n-name">Proteína alta</div><div class="n-detail">Mín. 28–30% de proteína animal para desarrollo muscular y óseo</div></div>
+      <div class="nutri-item"><div class="n-icon">🐟</div><div class="n-name">Omega-3 & DHA</div><div class="n-detail">Esenciales para el desarrollo cerebral y ocular del cachorro</div></div>
+      <div class="nutri-item"><div class="n-icon">🥛</div><div class="n-name">Calcio & Fósforo</div><div class="n-detail">Proporción 1.2:1 para huesos y dientes sanos. No exceder</div></div>
+      <div class="nutri-item"><div class="n-icon">🥣</div><div class="n-name">Frecuencia</div><div class="n-detail">3–4 comidas al día hasta los 6 meses, luego 2–3 al día</div></div>
+      <div class="nutri-item"><div class="n-icon">💧</div><div class="n-name">Hidratación</div><div class="n-detail">Agua fresca siempre disponible. 50 ml por kg de peso al día</div></div>
+      <div class="nutri-item"><div class="n-icon">📏</div><div class="n-name">Porciones</div><div class="n-detail">Sigue las indicaciones del alimento según raza y peso adulto esperado</div></div>
+    </div>
+  </div>
+  <div id="nutri-na" class="nutri-content">
+    <div class="nutri-grid">
+      <div class="nutri-item"><div class="n-icon">🥩</div><div class="n-name">Proteína</div><div class="n-detail">Mín. 18–25% proteína de calidad como primer ingrediente</div></div>
+      <div class="nutri-item"><div class="n-icon">🌾</div><div class="n-name">Carbohidratos</div><div class="n-detail">Fuentes integrales: arroz, avena. Evita exceso para prevenir sobrepeso</div></div>
+      <div class="nutri-item"><div class="n-icon">🫒</div><div class="n-name">Grasas saludables</div><div class="n-detail">8–12% de grasa. Omega-6 para pelaje brillante y piel sana</div></div>
+      <div class="nutri-item"><div class="n-icon">🥦</div><div class="n-name">Fibra</div><div class="n-detail">Regula el tránsito intestinal. Zanahorias y calabaza son ideales</div></div>
+      <div class="nutri-item"><div class="n-icon">⚖️</div><div class="n-name">Control de peso</div><div class="n-detail">2 comidas al día, misma hora. Evita dar sobras de mesa</div></div>
+      <div class="nutri-item"><div class="n-icon">🚫</div><div class="n-name">Sin ayunos largos</div><div class="n-detail">No dejes más de 12h sin comer. Puede causar gastritis crónica</div></div>
+    </div>
+  </div>
+  <div id="nutri-ns" class="nutri-content">
+    <div class="nutri-grid">
+      <div class="nutri-item"><div class="n-icon">🦴</div><div class="n-name">Articulaciones</div><div class="n-detail">Busca alimentos con glucosamina y condroitina para movilidad</div></div>
+      <div class="nutri-item"><div class="n-icon">🫀</div><div class="n-name">Sodio reducido</div><div class="n-detail">Corazón y riñones se benefician de dietas con bajo sodio</div></div>
+      <div class="nutri-item"><div class="n-icon">🧠</div><div class="n-name">Antioxidantes</div><div class="n-detail">Vitamina E y C para función cognitiva en perros mayores</div></div>
+      <div class="nutri-item"><div class="n-icon">🏃</div><div class="n-name">Calorías ajustadas</div><div class="n-detail">Menos actividad = menos calorías. Evita la obesidad senil</div></div>
+      <div class="nutri-item"><div class="n-icon">💊</div><div class="n-name">Suplementos</div><div class="n-detail">Consulta sobre omega-3, vitamina B12 y probióticos con tu vet</div></div>
+      <div class="nutri-item"><div class="n-icon">🥘</div><div class="n-name">Textura blanda</div><div class="n-detail">Si tiene problemas dentales, mezcla croquetas con agua tibia</div></div>
+    </div>
+  </div>
+  <div id="nutri-ng" class="nutri-content">
+    <div class="nutri-grid">
+      <div class="nutri-item"><div class="n-icon">🐟</div><div class="n-name">Carnívoro estricto</div><div class="n-detail">Los gatos necesitan taurina animal. No pueden ser vegetarianos</div></div>
+      <div class="nutri-item"><div class="n-icon">💧</div><div class="n-name">Hidratación</div><div class="n-detail">Poca sed natural → combina húmedo y seco. Usa fuente de agua</div></div>
+      <div class="nutri-item"><div class="n-icon">🥣</div><div class="n-name">Comidas pequeñas</div><div class="n-detail">4–6 porciones pequeñas al día imitan el comportamiento de caza</div></div>
+      <div class="nutri-item"><div class="n-icon">🧬</div><div class="n-name">Taurina</div><div class="n-detail">Esencial para corazón, visión y reproducción. Siempre presente</div></div>
+      <div class="nutri-item"><div class="n-icon">🚫</div><div class="n-name">Sin exceso de carbos</div><div class="n-detail">Demasiados cereales pueden causar diabetes felina con el tiempo</div></div>
+      <div class="nutri-item"><div class="n-icon">🍖</div><div class="n-name">Proteína mín. 35%</div><div class="n-detail">Mayor porcentaje que los perros. El primer ingrediente debe ser carne</div></div>
+    </div>
+  </div>
+  <div class="nutri-danger">
+    <h4>🚫 Alimentos prohibidos para mascotas</h4>
+    <div class="danger-grid">
+      <div class="danger-item">🍫 Chocolate</div>
+      <div class="danger-item">🧅 Cebolla y ajo</div>
+      <div class="danger-item">🍇 Uvas y pasas</div>
+      <div class="danger-item">🥑 Aguacate</div>
+      <div class="danger-item">☕ Cafeína</div>
+      <div class="danger-item">🍬 Xilitol</div>
+      <div class="danger-item">🍺 Alcohol</div>
+      <div class="danger-item">🦴 Huesos cocinados</div>
+      <div class="danger-item">🥛 Leche entera</div>
+      <div class="danger-item">🧂 Sal en exceso</div>
+      <div class="danger-item">🌰 Nueces macadamia</div>
+      <div class="danger-item">🍑 Huesos de frutas</div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- PRIMEROS AUXILIOS -->
+<section id="primeros-auxilios" class="reveal">
+  <div class="section-header">
+    <div class="section-label">Emergencias</div>
+    <h2 class="section-title">Primeros Auxilios</h2>
+    <p class="section-sub">Saber reaccionar en los primeros minutos puede salvar la vida de tu mascota. Aprende los protocolos básicos.</p>
+  </div>
+  <div class="primeros-grid">
+    <div class="primeros-card">
+      <div class="primeros-title">🤢 Envenenamiento</div>
+      <ul class="steps-list">
+        <li><div class="step-num">1</div>Mantén la calma y aleja a tu mascota de la fuente tóxica.</li>
+        <li><div class="step-num">2</div>NO induzcas el vómito sin indicación veterinaria: puede empeorar.</li>
+        <li><div class="step-num">3</div>Anota qué ingirió, la cantidad aproximada y la hora exacta.</li>
+        <li><div class="step-num">4</div>Llama a emergencias veterinarias antes de trasladarlo.</li>
+        <li><div class="step-num">5</div>Transporta en posición lateral si está inconsciente o débil.</li>
+      </ul>
+    </div>
+    <div class="primeros-card">
+      <div class="primeros-title">🩸 Heridas y hemorragias</div>
+      <ul class="steps-list">
+        <li><div class="step-num">1</div>Usa guantes o tela limpia para protegerte y contener el sangrado.</li>
+        <li><div class="step-num">2</div>Presiona firmemente con gasa estéril durante 5–10 minutos.</li>
+        <li><div class="step-num">3</div>No retires el material; añade más encima si se empapa.</li>
+        <li><div class="step-num">4</div>Limpia heridas menores con solución salina, nunca agua oxigenada.</li>
+        <li><div class="step-num">5</div>Acude al vet si la herida es profunda o el sangrado no cede.</li>
+      </ul>
+    </div>
+    <div class="primeros-card">
+      <div class="primeros-title">🌡️ Golpe de calor</div>
+      <ul class="steps-list">
+        <li><div class="step-num">1</div>Señales: jadeo intenso, lengua morada, temblores, colapso.</li>
+        <li><div class="step-num">2</div>Lleva a la mascota a un lugar fresco y con sombra de inmediato.</li>
+        <li><div class="step-num">3</div>Aplica agua fresca (no helada) en patas, axilas y cuello.</li>
+        <li><div class="step-num">4</div>Ofrece agua fresca para beber si está consciente, en pequeñas cantidades.</li>
+        <li><div class="step-num">5</div>Traslada urgente al veterinario aunque parezca mejorar.</li>
+      </ul>
+    </div>
+    <div class="primeros-card">
+      <div class="primeros-title">🫁 Atragantamiento</div>
+      <ul class="steps-list">
+        <li><div class="step-num">1</div>Señales: tos violenta, babeo, patas en la boca, dificultad respiratoria.</li>
+        <li><div class="step-num">2</div>Abre la boca con cuidado e intenta ver y retirar el objeto.</li>
+        <li><div class="step-num">3</div>Si no puedes retirarlo, inclina con la cabeza hacia abajo.</li>
+        <li><div class="step-num">4</div>Da 5 golpes suaves entre los omóplatos con la palma abierta.</li>
+        <li><div class="step-num">5</div>Traslada urgente si el objeto no sale en 1–2 minutos.</li>
+      </ul>
+    </div>
+    <div class="primeros-card">
+      <div class="primeros-title">💊 Fractura o lesión</div>
+      <ul class="steps-list">
+        <li><div class="step-num">1</div>Señales: cojera, extremidad en ángulo anormal, llanto al tocar.</li>
+        <li><div class="step-num">2</div>No intentes enderezar ni inmovilizar el hueso tú mismo.</li>
+        <li><div class="step-num">3</div>Coloca a la mascota sobre una superficie rígida plana.</li>
+        <li><div class="step-num">4</div>Cúbrela con una manta para mantener el calor y reducir el shock.</li>
+        <li><div class="step-num">5</div>Lleva urgente al veterinario evitando mover la zona lesionada.</li>
+      </ul>
+    </div>
+    <div class="primeros-card">
+      <div class="primeros-title">❤️ Paro cardiorrespiratorio</div>
+      <ul class="steps-list">
+        <li><div class="step-num">1</div>Señales: inconsciente, sin pulso, no respira, encías azules o pálidas.</li>
+        <li><div class="step-num">2</div>Coloca boca arriba, extiende el cuello para abrir la vía aérea.</li>
+        <li><div class="step-num">3</div>Cubre su hocico con tu boca y sopla suavemente 2 veces.</li>
+        <li><div class="step-num">4</div>30 compresiones en el punto más ancho del pecho con las palmas.</li>
+        <li><div class="step-num">5</div>Repite ciclos 30:2 y traslada urgente sin dejar de hacer RCP.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="emergency-banner">
+    <div class="emg-icon">🚨</div>
+    <div class="emg-text"><h4>Línea de Emergencias Veterinarias 24h</h4><p>Disponible todos los días del año. Ante cualquier emergencia, llama primero.</p></div>
+    <div class="emg-num">800 PET-HELP</div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- CHECKLIST -->
+<section id="checklist" class="reveal">
+  <div class="section-header">
+    <div class="section-label">Rutina de bienestar</div>
+    <h2 class="section-title">Checklist Mensual de Salud</h2>
+    <p class="section-sub">Marca las tareas completadas este mes para mantener a tu mascota en su mejor estado.</p>
+  </div>
+  <div class="checklist-wrap">
+    <div class="checklist-grid">
+      <div class="checklist-col">
+        <h4>🏥 Salud médica</h4>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Revisar cartilla de vacunación</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Aplicar antiparasitario externo</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Revisión visual de orejas y ojos</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Pesar a la mascota</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Revisar dientes y encías</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Palpar cuerpo en busca de bultos</span></div>
+      </div>
+      <div class="checklist-col">
+        <h4>🛁 Higiene & Grooming</h4>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Dar baño completo</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Cortar o limar uñas</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Cepillado dental</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Limpiar pliegues o arrugas</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Lavar cama y accesorios</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Limpiar comedero y bebedero</span></div>
+      </div>
+      <div class="checklist-col">
+        <h4>🍽️ Nutrición & Actividad</h4>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Verificar fecha de caducidad del alimento</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Revisar cantidad de agua consumida</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Observar consistencia de heces</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Asegurar ejercicio diario</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Enriquecimiento ambiental (juegos)</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Registrar cambios de comportamiento</span></div>
+      </div>
+    </div>
+    <div class="checklist-progress"><div class="checklist-bar" id="checkBar"></div></div>
+    <div class="checklist-pct" id="checkPct">0 de 18 tareas completadas</div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- VETERINARIAS -->
+<section id="veterinarias" class="reveal">
+  <div class="section-header">
+    <div class="section-label">Red de atención</div>
+    <h2 class="section-title">Veterinarias Recomendadas</h2>
+    <p class="section-sub">Clínicas certificadas con servicio de vacunación, medicina preventiva y atención de emergencia.</p>
+  </div>
+  <div class="vet-grid">
+    <div class="vet-card">
+      <div class="vet-header"><div class="vet-avatar">🏥</div><div><div class="vet-name">Clínica Vetblu</div><div class="vet-specialty">Medicina general y preventiva</div></div></div>
+      <div class="vet-info">
+        <div class="vet-info-row">📍 Av. Principal 245, Col. Centro</div>
+        <div class="vet-info-row">📞 +52 55 1234 5678</div>
+        <div class="vet-info-row">🕐 Lun–Sáb 8:00–20:00 | Dom 9:00–14:00</div>
+        <div class="vet-info-row">⭐ 4.9 · 312 reseñas · Sin cita previa</div>
+      </div>
+      <a href="tel:+525512345678" class="vet-btn">📲 Llamar ahora</a>
+    </div>
+    <div class="vet-card">
+      <div class="vet-header"><div class="vet-avatar">🐾</div><div><div class="vet-name">Paws & Care</div><div class="vet-specialty">Especialistas en pequeñas especies</div></div></div>
+      <div class="vet-info">
+        <div class="vet-info-row">📍 Calle Robles 88, Col. San Rafael</div>
+        <div class="vet-info-row">📞 +52 55 9876 5432</div>
+        <div class="vet-info-row">🕐 Lun–Dom 9:00–21:00 · Urgencias 24h</div>
+        <div class="vet-info-row">⭐ 4.8 · 198 reseñas · Paquetes de vacunación</div>
+      </div>
+      <a href="tel:+525598765432" class="vet-btn">📲 Llamar ahora</a>
+    </div>
+    <div class="vet-card">
+      <div class="vet-header"><div class="vet-avatar">💉</div><div><div class="vet-name">VacuPet Express</div><div class="vet-specialty">Centro de vacunación masiva</div></div></div>
+      <div class="vet-info">
+        <div class="vet-info-row">📍 Blvd. Reforma 1500, Piso 2</div>
+        <div class="vet-info-row">📞 +52 55 5500 1100</div>
+        <div class="vet-info-row">🕐 Lun–Vie 7:00–19:00 | Sáb 8:00–15:00</div>
+        <div class="vet-info-row">⭐ 4.7 · 432 reseñas · Rápido y económico</div>
+      </div>
+      <a href="tel:+525555001100" class="vet-btn">📲 Llamar ahora</a>
+    </div>
+    <div class="vet-card">
+      <div class="vet-header"><div class="vet-avatar">🌿</div><div><div class="vet-name">Animal Health Plus</div><div class="vet-specialty">Veterinaria integrativa</div></div></div>
+      <div class="vet-info">
+        <div class="vet-info-row">📍 Calle Verde 33, Col. Polanco</div>
+        <div class="vet-info-row">📞 +52 55 4400 2200</div>
+        <div class="vet-info-row">🕐 Lun–Sáb 9:00–20:00 · Cita previa</div>
+        <div class="vet-info-row">⭐ 4.9 · 276 reseñas · Seguimiento digital</div>
+      </div>
+      <a href="tel:+525544002200" class="vet-btn">📲 Llamar ahora</a>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- CONTACTO -->
+<section id="contacto" class="reveal">
+  <div class="section-header">
+    <div class="section-label">Siempre disponibles</div>
+    <h2 class="section-title">Contáctanos</h2>
+    <p class="section-sub">¿Tienes dudas sobre la salud de tu mascota? Nuestro equipo está disponible para orientarte en todo momento.</p>
+  </div>
+  <div class="contacts-grid">
+    <div class="contact-card"><div class="contact-icon">📞</div><div><div class="contact-label">Línea de atención</div><div class="contact-val">800 738 2283</div></div></div>
+    <div class="contact-card"><div class="contact-icon">📱</div><div><div class="contact-label">WhatsApp</div><div class="contact-val">+52 55 1000 2000</div></div></div>
+    <div class="contact-card"><div class="contact-icon">📧</div><div><div class="contact-label">Correo electrónico</div><div class="contact-val">hola@petcare.mx</div></div></div>
+    <div class="contact-card"><div class="contact-icon">🌐</div><div><div class="contact-label">Sitio web</div><div class="contact-val">www.petcare.mx</div></div></div>
+    <div class="contact-card"><div class="contact-icon">📍</div><div><div class="contact-label">Oficina central</div><div class="contact-val">CDMX, México</div></div></div>
+    <div class="contact-card"><div class="contact-icon">🕐</div><div><div class="contact-label">Horario de atención</div><div class="contact-val">Lun–Dom 8:00–22:00</div></div></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <strong>PetCare</strong> · Cuidando la salud integral de tus mascotas · Información basada en guías WSAVA y normativas veterinarias vigentes.</p>
+  <p style="margin-top:.5rem;font-size:.78rem;">Este sitio es informativo. Consulta siempre a un médico veterinario certificado.</p>
+</footer>
+
+<script>
+// TAB VACUNAS
+function switchTab(name,btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// CALCULADORA
+const intervals={
+  da2pp_c:{days:21,label:'3 semanas',note:'Repite hasta completar la serie de 4 dosis en cachorro.'},
+  da2pp_a:{days:365,label:'1 año',note:'Algunos esquemas permiten extender a 3 años según el fabricante.'},
+  rabia_p:{days:365,label:'1 año',note:'Primer refuerzo al año; después cada 1–3 años según normativa local.'},
+  lepto:{days:365,label:'1 año',note:'En zonas de alta humedad o riesgo puede aplicarse cada 6 meses.'},
+  borde:{days:180,label:'6 meses',note:'Requerida para residencias caninas, exposiciones y parques.'},
+  fvrcp_c:{days:21,label:'3 semanas',note:'Completa la serie de 3–4 dosis en gatito.'},
+  fvrcp_a:{days:1095,label:'3 años',note:'Un título serológico puede confirmar inmunidad vigente.'},
+  rabia_g:{days:365,label:'1 año',note:'Primer refuerzo al año; después según normativa local.'},
+  felv:{days:365,label:'1 año',note:'Solo en gatos con acceso al exterior o convivencia con positivos.'}
+};
+
+function calcular(){
+  const name=document.getElementById('petName').value.trim()||'tu mascota';
+  const vaccine=document.getElementById('vaccineType').value;
+  const lastDate=document.getElementById('lastDate').value;
+  const resultBox=document.getElementById('resultBox');
+  if(!vaccine||!lastDate){alert('Por favor selecciona la vacuna y la fecha de la última aplicación.');return;}
+  const info=intervals[vaccine];
+  const last=new Date(lastDate);
+  const next=new Date(lastDate);
+  next.setDate(next.getDate()+info.days);
+  const today=new Date();today.setHours(0,0,0,0);
+  const daysLeft=Math.ceil((next-today)/(1000*60*60*24));
+  const fmt=d=>d.toLocaleDateString('es-MX',{day:'2-digit',month:'long',year:'numeric'});
+  document.getElementById('resultTitle').textContent='📅 Plan de vacunación para '+name;
+  document.getElementById('resultGrid').innerHTML=`
+    <div class="result-item"><div class="val">${fmt(last)}</div><div class="lbl">Última vacuna</div></div>
+    <div class="result-item"><div class="val">${info.label}</div><div class="lbl">Intervalo recomendado</div></div>
+    <div class="result-item"><div class="val" style="color:${daysLeft<=0?'#fca5a5':daysLeft<=14?'#fcd34d':'var(--aqua)'}">${daysLeft<=0?'¡Vencida!':daysLeft+' días'}</div><div class="lbl">Tiempo restante</div></div>
+    <div class="result-item"><div class="val">${fmt(next)}</div><div class="lbl">Próxima dosis</div></div>
+  `;
+  document.getElementById('resultNote').textContent='💡 '+info.note;
+  resultBox.classList.add('show');
+  resultBox.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// NUTRICION TABS
+function switchNutri(name,btn){
+  document.querySelectorAll('.nutri-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.nutri-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('nutri-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// CHECKLIST
+function toggleCheck(el){
+  el.classList.toggle('done');
+  el.querySelector('.check-box').textContent=el.classList.contains('done')?'✓':'';
+  const all=document.querySelectorAll('.check-item').length;
+  const done=document.querySelectorAll('.check-item.done').length;
+  const pct=Math.round((done/all)*100);
+  document.getElementById('checkBar').style.width=pct+'%';
+  document.getElementById('checkPct').textContent=done+' de '+all+' tareas completadas — '+pct+'%';
+}
+
+// SCROLL REVEAL
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
